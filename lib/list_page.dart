@@ -1,24 +1,61 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:webuni_flutter_seminarium/models.dart';
 
-class ListPage extends StatelessWidget {
+class ListPage extends StatefulWidget {
   const ListPage({super.key});
+
+  @override
+  State<ListPage> createState() => _ListPageState();
+}
+
+class _ListPageState extends State<ListPage> {
+  Future<List<User>>? _userRequest;
+
+  Future<List<User>> _loadUsers() async {
+    var response = await http.get(
+      Uri.parse('https://randomuser.me/api/?results=40'),
+    );
+    var jsonData = jsonDecode(response.body);
+    return (jsonData['results'] as List).map(User.fromJson).toList();
+  }
+
+
+  @override
+  void initState() {
+    _userRequest = _loadUsers();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('User List'),
+        title: Text('User List 2'),
       ),
-      body: ListView(
-        children: [
-          for (int i = 0; i < 20; i++)
-            UserListItem(
-              name: 'Dani $i',
-              avatarUrl: 'https://picsum.photos/200',
-              email: 'dani@example.com',
-            ),
-        ],
+      body: FutureBuilder<List<User>>(
+        future: _userRequest,
+        builder: (context, snapshot) {
+          if (!snapshot.hasData){
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          } else {
+            return ListView(
+              children: [
+                for (var user in snapshot.requireData)
+                  UserListItem(
+                    name: user.name.fullName,
+                    avatarUrl: user.picture.medium,
+                    email: user.email,
+                  ),
+              ],
+            );
+          }
+        }
       ),
     );
   }

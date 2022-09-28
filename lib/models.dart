@@ -1,9 +1,8 @@
 import 'package:json_annotation/json_annotation.dart';
+
 part 'models.g.dart';
 
-enum Gender{
-  male, female, other
-}
+enum Gender { male, female, other }
 
 @JsonSerializable()
 class Name {
