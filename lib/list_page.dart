@@ -41,7 +41,17 @@ class UserListItem extends StatelessWidget {
       margin: const EdgeInsets.all(4.0),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(16)
+        borderRadius: BorderRadius.circular(16),
+        /*gradient: LinearGradient(
+          colors: [Colors.green, Colors.red, Colors.pink],
+          stops: [0, 0.7, 1]
+        ),*/
+        boxShadow: [
+          BoxShadow(
+            offset: Offset(3, 5),
+            blurRadius: 5,
+          ),
+        ],
       ),
       clipBehavior: Clip.antiAlias,
       child: Row(
