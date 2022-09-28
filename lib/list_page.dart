@@ -79,6 +79,7 @@ class UserListItem extends StatelessWidget {
       },
       child: Container(
         margin: const EdgeInsets.all(4.0),
+        height: 60,
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(16),
@@ -96,12 +97,16 @@ class UserListItem extends StatelessWidget {
         clipBehavior: Clip.antiAlias,
         child: Row(
           children: [
-            Image.network(
-              user.picture.medium,
-              height: 60,
+            Hero(
+              tag: user.email,
+              child: Image.network(
+                user.picture.medium,
+                fit: BoxFit.cover,
+              ),
             ),
             SizedBox(width: 16),
             Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(

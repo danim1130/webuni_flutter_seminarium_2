@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:webuni_flutter_seminarium/models.dart';
 
-class DetailsPage extends StatelessWidget{
+class DetailsPage extends StatelessWidget {
   final User user;
 
   const DetailsPage({super.key, required this.user});
@@ -17,7 +17,10 @@ class DetailsPage extends StatelessWidget{
         child: Column(
           children: [
             SizedBox(height: 40),
-            Image.network(user.picture.large),
+            Hero(
+              tag: user.email,
+              child: Image.network(user.picture.large),
+            ),
             SizedBox(height: 20),
             Text(user.name.fullName),
             SizedBox(height: 8),
