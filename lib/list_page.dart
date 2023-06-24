@@ -17,11 +17,16 @@ class _ListPageState extends State<ListPage> {
   Future<List<User>>? _userRequest;
 
   Future<List<User>> _loadUsers() async {
-    var response = await http.get(
-      Uri.parse('https://randomuser.me/api/?results=40'),
-    );
-    var jsonData = jsonDecode(response.body);
-    return (jsonData['results'] as List).map(User.fromJson).toList();
+    try{
+      var response = await http.get(
+        Uri.parse('https://randomuser.me/api/?results=40'),
+      );
+      var jsonData = jsonDecode(response.body);
+      return (jsonData['results'] as List).map(User.fromJson).toList();
+    } catch (e) {
+      print(e);
+    }
+    return [];
   }
 
   @override
